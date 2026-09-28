@@ -10,7 +10,7 @@ export function MenuCardapio() {
     <section className="flex min-h-full flex-col gap-5 pb-8" aria-labelledby="menu-cardapio-title">
       <div className="flex flex-col gap-4 border-b border-[#e5e2d5] pb-5 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8a9270]">Material oficial</p>
+          <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8a9270]">Coletânea Pessoal</p>
           <h1 id="menu-cardapio-title" className="font-display text-[28px] font-bold leading-tight tracking-[-0.05em] text-[#3d4e45] sm:text-[36px]">
             Cardápio
           </h1>
