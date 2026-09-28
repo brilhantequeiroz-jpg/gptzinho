@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Cycle01Panel } from "@/components/urucum/Cycle01Panel";
 import { useUrucumRoles } from "@/hooks/useUrucumRoles";
 import { ModulePlaceholder } from "@/components/urucum/ModulePlaceholder";
+import { MenuCardapio } from "@/components/urucum/MenuCardapio";
 import {
   ArrowUp,
   BarChart3,
@@ -337,6 +338,8 @@ const Index = () => {
                   )}
                 </section>
               )
+              ) : activeModule === "cardapio" ? (
+                <MenuCardapio />
               ) : activeModule === "pedidos" || activeModule === "compras" || activeModule === "estoque" ? (
                 <Cycle01Panel focus={activeModule} />
               ) : (
