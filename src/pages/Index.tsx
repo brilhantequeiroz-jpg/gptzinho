@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { useAuth } from "@/components/AuthProvider";
+import { Cycle01Panel } from "@/components/urucum/Cycle01Panel";
+import { useUrucumRoles } from "@/hooks/useUrucumRoles";
 import { ModulePlaceholder } from "@/components/urucum/ModulePlaceholder";
 import {
   ArrowUp,
@@ -110,6 +113,8 @@ const assistantReplies = [
 ];
 
 const Index = () => {
+  const { session } = useAuth();
+  const { roles } = useUrucumRoles();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
@@ -241,8 +246,8 @@ const Index = () => {
             <div className="mt-4 flex items-center gap-3 rounded-[14px] bg-white/70 px-3 py-3">
               <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f5b19d] text-[11px] font-bold text-white">?</div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[12px] font-semibold text-[#423b65]">Usuário atual</p>
-                <p className="text-[10px] text-[#aaa5bd]">Identidade a definir</p>
+                <p className="truncate text-[12px] font-semibold text-[#423b65]">{session?.user.email ?? "Usuário atual"}</p>
+                <p className="truncate text-[10px] text-[#aaa5bd]">{roles.length ? roles.join(" · ") : "Papel pendente de atribuição"}</p>
               </div>
               <ChevronDown size={14} className="text-[#aaa5bd]" />
             </div>
@@ -346,6 +351,8 @@ const Index = () => {
                   )}
                 </section>
               )
+              ) : activeModule === "pedidos" || activeModule === "compras" || activeModule === "estoque" ? (
+                <Cycle01Panel focus={activeModule} />
               ) : (
                 <ModulePlaceholder title={activeModuleItem.label} icon={activeModuleItem.icon} />
               )}
