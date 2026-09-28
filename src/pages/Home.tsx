@@ -29,7 +29,7 @@ export default function Home({ authenticated = false }: { authenticated?: boolea
             Controle e Gestão acompanhadas de sabor.
           </h1>
           <p className="mt-6 max-w-[540px] text-[16px] leading-7 text-[#837c96] sm:text-[18px]">
-            O Urucum nasce da necessidade de transformar o sistema de Gestão através do olhar da cozinha. Adequado a rotina e a realidade dos processos, garantindo rastreabilidade da operação ponta-a-ponta, garante o controle e análise das informações em tempo real.
+            O Urucum nasce da necessidade de criar um Sistema de Gestão através do olhar da cozinha, da realidade operacional. Adequando-se as mais diversas rotinas, garantindo rastreabilidade da operação ponta-a-ponta, gerando o controle e análise das informações em tempo real.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link to={accessPath} className="inline-flex h-12 items-center justify-center gap-2 rounded-[14px] bg-[#6d5df5] px-5 text-[13px] font-bold text-white shadow-[0_10px_22px_rgba(109,93,245,0.22)] transition hover:-translate-y-0.5 hover:bg-[#5b4ada]">
