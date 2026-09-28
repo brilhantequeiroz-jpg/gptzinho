@@ -26,15 +26,6 @@ type Message = {
   content: string;
 };
 
-type Chat = {
-  id: string;
-  title: string;
-  updatedAt: number;
-  messages: Message[];
-};
-
-const STORAGE_KEY = "gptzinho-chats";
-
 const starterPrompts = [
   {
     icon: Lightbulb,
@@ -59,37 +50,12 @@ const starterPrompts = [
   },
 ];
 
-const defaultChats: Chat[] = [
-  { id: "travel", title: "Planejamento de viagem", updatedAt: Date.now(), messages: [] },
-  { id: "newsletter", title: "Ideias para newsletter", updatedAt: Date.now() - 86400000, messages: [] },
-  { id: "bread", title: "Receita de pão caseiro", updatedAt: Date.now() - 86400000 * 5, messages: [] },
-  { id: "routine", title: "Organização da rotina", updatedAt: Date.now() - 86400000 * 7, messages: [] },
+const recentChats = [
+  { title: "Planejamento de viagem", time: "Hoje", active: true },
+  { title: "Ideias para newsletter", time: "Ontem" },
+  { title: "Receita de pão caseiro", time: "12 jun" },
+  { title: "Organização da rotina", time: "10 jun" },
 ];
-
-const loadChats = (): Chat[] => {
-  const savedChats = window.localStorage.getItem(STORAGE_KEY);
-  if (!savedChats) return defaultChats;
-
-  try {
-    const parsedChats = JSON.parse(savedChats) as Chat[];
-    if (Array.isArray(parsedChats) && parsedChats.every((chat) => chat.id && chat.title && Array.isArray(chat.messages))) {
-      return parsedChats;
-    }
-  } catch {
-    return defaultChats;
-  }
-
-  return defaultChats;
-};
-
-const formatChatTime = (timestamp: number) => {
-  const daysAgo = Math.floor((Date.now() - timestamp) / 86400000);
-  if (daysAgo === 0) return "Hoje";
-  if (daysAgo === 1) return "Ontem";
-  return new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "short" })
-    .format(timestamp)
-    .replace(" de ", " ");
-};
 
 function RobotMark({ small = false }: { small?: boolean }) {
   return (
@@ -113,70 +79,45 @@ const assistantReplies = [
 ];
 
 const Index = () => {
-  const [chats, setChats] = useState<Chat[]>(() => loadChats());
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeChatId, setActiveChatId] = useState(() => loadChats()[0]?.id ?? "travel");
+  const [activeChat, setActiveChat] = useState("Planejamento de viagem");
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const activeChat = chats.find((chat) => chat.id === activeChatId) ?? chats[0];
-  const messages = activeChat?.messages ?? [];
-  const sortedChats = [...chats].sort((first, second) => second.updatedAt - first.updatedAt);
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
-  useEffect(() => {
-    window.localStorage.setItem(STORAGE_KEY, JSON.stringify(chats));
-  }, [chats]);
-
   const startNewChat = () => {
-    const newChat: Chat = {
-      id: `chat-${Date.now()}`,
-      title: "Nova conversa",
-      updatedAt: Date.now(),
-      messages: [],
-    };
-    setChats((current) => [newChat, ...current]);
-    setActiveChatId(newChat.id);
+    setMessages([]);
     setInput("");
+    setActiveChat("Nova conversa");
     setIsSidebarOpen(false);
     window.setTimeout(() => inputRef.current?.focus(), 0);
   };
 
   const sendMessage = (value = input) => {
     const trimmed = value.trim();
-    if (!trimmed || isTyping || !activeChat) return;
+    if (!trimmed || isTyping) return;
 
-    const chatId = activeChat.id;
-    const replyIndex = activeChat.messages.length % assistantReplies.length;
-    const userMessage: Message = { id: Date.now(), role: "user", content: trimmed };
-    setChats((current) => current.map((chat) => chat.id === chatId
-      ? {
-          ...chat,
-          title: chat.title === "Nova conversa" ? trimmed.slice(0, 30) : chat.title,
-          updatedAt: Date.now(),
-          messages: [...chat.messages, userMessage],
-        }
-      : chat,
-    ));
+    setMessages((current) => [
+      ...current,
+      { id: Date.now(), role: "user", content: trimmed },
+    ]);
     setInput("");
     setIsTyping(true);
 
     window.setTimeout(() => {
-      setChats((current) => current.map((chat) => chat.id === chatId
-        ? {
-            ...chat,
-            updatedAt: Date.now(),
-            messages: [...chat.messages, {
-              id: Date.now() + 1,
-              role: "assistant",
-              content: assistantReplies[replyIndex],
-            }],
-          }
-        : chat,
-      ));
+      setMessages((current) => [
+        ...current,
+        {
+          id: Date.now() + 1,
+          role: "assistant",
+          content: assistantReplies[current.length % assistantReplies.length],
+        },
+      ]);
       setIsTyping(false);
     }, 650);
   };
@@ -235,21 +176,21 @@ const Index = () => {
           </div>
 
           <div className="space-y-1">
-            {sortedChats.map((chat) => (
+            {recentChats.map((chat) => (
               <button
-                key={chat.id}
+                key={chat.title}
                 onClick={() => {
-                  setActiveChatId(chat.id);
-                  setIsTyping(false);
+                  setActiveChat(chat.title);
+                  setMessages([]);
                   setIsSidebarOpen(false);
                 }}
-                className={`group flex w-full items-center gap-3 rounded-[13px] px-3 py-3 text-left transition ${activeChat?.id === chat.id ? "bg-white shadow-[0_4px_14px_rgba(80,67,128,0.07)]" : "hover:bg-white/70"}`}
+                className={`group flex w-full items-center gap-3 rounded-[13px] px-3 py-3 text-left transition ${activeChat === chat.title ? "bg-white shadow-[0_4px_14px_rgba(80,67,128,0.07)]" : "hover:bg-white/70"}`}
               >
-                <MessageCircle size={16} className={activeChat?.id === chat.id ? "text-[#6d5df5]" : "text-[#aaa5bd]"} />
-                <span className={`min-w-0 flex-1 truncate text-[13px] ${activeChat?.id === chat.id ? "font-semibold text-[#423b65]" : "text-[#77718d]"}`}>
+                <MessageCircle size={16} className={activeChat === chat.title ? "text-[#6d5df5]" : "text-[#aaa5bd]"} />
+                <span className={`min-w-0 flex-1 truncate text-[13px] ${activeChat === chat.title ? "font-semibold text-[#423b65]" : "text-[#77718d]"}`}>
                   {chat.title}
                 </span>
-                <span className="text-[10px] text-[#b1adbd]">{formatChatTime(chat.updatedAt)}</span>
+                <span className="text-[10px] text-[#b1adbd]">{chat.time}</span>
               </button>
             ))}
           </div>
@@ -286,7 +227,7 @@ const Index = () => {
                 <span>Workspace</span>
                 <span className="text-[#d3cfda]">/</span>
               </div>
-              <span className="max-w-[170px] truncate text-[13px] font-semibold text-[#4b4564] sm:max-w-none">{activeChat?.title ?? "Nova conversa"}</span>
+              <span className="max-w-[170px] truncate text-[13px] font-semibold text-[#4b4564] sm:max-w-none">{activeChat}</span>
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
               <div className="hidden items-center gap-2 rounded-full bg-[#eaf8f1] px-3 py-1.5 text-[11px] font-semibold text-[#279b70] sm:flex">
