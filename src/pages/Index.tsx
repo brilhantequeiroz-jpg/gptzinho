@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/components/AuthProvider";
+import { Link } from "react-router-dom";
 import { Cycle01Panel } from "@/components/urucum/Cycle01Panel";
 import { useUrucumRoles } from "@/hooks/useUrucumRoles";
 import { ModulePlaceholder } from "@/components/urucum/ModulePlaceholder";
@@ -167,13 +168,13 @@ const Index = () => {
           className={`fixed inset-y-0 left-0 z-40 flex w-[282px] -translate-x-full flex-col border-r border-[#ece9f1] bg-[#f7f5ff] px-4 py-5 transition-transform duration-300 md:relative md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : ""}`}
         >
           <div className="mb-8 flex items-center justify-between px-2">
-            <div className="flex items-center gap-2.5">
+            <Link to="/" className="flex items-center gap-2.5 rounded-[14px] outline-none transition hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[#bdb5f7]">
               <img src="/avatar_alisson_brilhante.png" alt="Alisson Brilhante" className="h-9 w-9 rounded-[13px] object-cover shadow-[0_7px_16px_rgba(109,93,245,0.22)]" />
               <div>
                 <p className="font-display text-[18px] font-bold leading-none tracking-[-0.04em] text-[#302a54]">URUCUM<span className="text-[#f08c6c]">.</span></p>
                 <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#9d97b0]">Chef Alisson Brilhante</p>
               </div>
-            </div>
+            </Link>
             <button
               className="rounded-lg p-1.5 text-[#a29cb7] transition hover:bg-white hover:text-[#6d5df5] md:hidden"
               onClick={() => setIsSidebarOpen(false)}
