@@ -59,13 +59,6 @@ const starterPrompts = [
   },
 ];
 
-const recentChats = [
-  { title: "Conversa de demonstração", time: "Hoje" },
-  { title: "Análise para revisão", time: "Ontem" },
-  { title: "Nota de trabalho", time: "12 jun" },
-  { title: "Nova conversa", time: "10 jun" },
-];
-
 type ModuleKey =
   | "dashboard"
   | "pedidos"
@@ -80,20 +73,19 @@ type ModuleKey =
 type ModuleItem = {
   key: ModuleKey;
   label: string;
-  description: string;
   icon: typeof LayoutDashboard;
 };
 
 const modules: ModuleItem[] = [
-  { key: "dashboard", label: "Dashboard", description: "Visão geral", icon: LayoutDashboard },
-  { key: "pedidos", label: "Pedidos", description: "Interface preparada", icon: ClipboardList },
-  { key: "cardapio", label: "Cardápio", description: "Interface preparada", icon: Utensils },
-  { key: "estoque", label: "Estoque", description: "Interface preparada", icon: PackageSearch },
-  { key: "compras", label: "Compras", description: "Interface preparada", icon: ShoppingCart },
-  { key: "fichas", label: "Fichas Técnicas", description: "Interface preparada", icon: ClipboardPenLine },
-  { key: "financeiro", label: "Financeiro", description: "Interface preparada", icon: WalletCards },
-  { key: "relatorios", label: "Relatórios", description: "Interface preparada", icon: BarChart3 },
-  { key: "gptzinho", label: "GPTzinho", description: "Assistente integrado", icon: Sparkles },
+  { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { key: "pedidos", label: "Pedidos", icon: ClipboardList },
+  { key: "cardapio", label: "Cardápio", icon: Utensils },
+  { key: "estoque", label: "Estoque", icon: PackageSearch },
+  { key: "compras", label: "Compras", icon: ShoppingCart },
+  { key: "fichas", label: "Fichas Técnicas", icon: ClipboardPenLine },
+  { key: "financeiro", label: "Financeiro", icon: WalletCards },
+  { key: "relatorios", label: "Relatórios", icon: BarChart3 },
+  { key: "gptzinho", label: "GPTzinho", icon: Sparkles },
 ];
 
 function RobotMark({ small = false }: { small?: boolean }) {
@@ -123,7 +115,6 @@ const Index = () => {
   const [isTyping, setIsTyping] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [activeModule, setActiveModule] = useState<ModuleKey>("gptzinho");
-  const [activeChat, setActiveChat] = useState("Conversa de demonstração");
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const activeModuleItem = modules.find((module) => module.key === activeModule) ?? modules[0];
 
@@ -135,7 +126,6 @@ const Index = () => {
     setActiveModule("gptzinho");
     setMessages([]);
     setInput("");
-    setActiveChat("Nova conversa");
     setIsSidebarOpen(false);
     window.setTimeout(() => inputRef.current?.focus(), 0);
   };
@@ -212,7 +202,7 @@ const Index = () => {
           </Button>
 
           <div className="mb-3 px-2">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#aaa5bd]">Estrutura do URUCUM</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#aaa5bd]">Navegação provisória</p>
           </div>
           <nav className="mb-6 space-y-1" aria-label="Módulos do URUCUM">
             {modules.map(({ key, label, icon: Icon }) => (
@@ -232,31 +222,13 @@ const Index = () => {
           </nav>
 
           <div className="mb-3 flex items-center justify-between px-2">
-            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#aaa5bd]">Suas conversas</p>
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#aaa5bd]">Conversas</p>
             <button className="rounded-md p-1 text-[#aaa5bd] transition hover:bg-white hover:text-[#6d5df5]" aria-label="Pesquisar conversas">
               <Search size={14} />
             </button>
           </div>
-
-          <div className="space-y-1">
-            {recentChats.map((chat) => (
-              <button
-                key={chat.title}
-                onClick={() => {
-                  setActiveModule("gptzinho");
-                  setActiveChat(chat.title);
-                  setMessages([]);
-                  setIsSidebarOpen(false);
-                }}
-                className={`group flex w-full items-center gap-3 rounded-[13px] px-3 py-3 text-left transition ${activeChat === chat.title && activeModule === "gptzinho" ? "bg-white shadow-[0_4px_14px_rgba(80,67,128,0.07)]" : "hover:bg-white/70"}`}
-              >
-                <MessageCircle size={16} className={activeChat === chat.title && activeModule === "gptzinho" ? "text-[#6d5df5]" : "text-[#aaa5bd]"} />
-                <span className={`min-w-0 flex-1 truncate text-[13px] ${activeChat === chat.title && activeModule === "gptzinho" ? "font-semibold text-[#423b65]" : "text-[#77718d]"}`}>
-                  {chat.title}
-                </span>
-                <span className="text-[10px] text-[#b1adbd]">{chat.time}</span>
-              </button>
-            ))}
+          <div className="rounded-[13px] border border-dashed border-[#ded9eb] px-3 py-3 text-[11px] leading-5 text-[#aaa5b6]">
+            Histórico de conversas pendente de definição.
           </div>
 
           <div className="mt-auto space-y-1 border-t border-[#e8e4f0] pt-4">
@@ -296,9 +268,9 @@ const Index = () => {
               </span>
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
-              <div className="hidden items-center gap-2 rounded-full bg-[#eaf8f1] px-3 py-1.5 text-[11px] font-semibold text-[#279b70] sm:flex">
-                <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[#42bc8c]" />
-                Gptzinho online
+              <div className="hidden items-center gap-2 rounded-full bg-[#f0edff] px-3 py-1.5 text-[11px] font-semibold text-[#6d5df5] sm:flex">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#6d5df5]" />
+                Assistente GPTzinho
               </div>
               <button className="relative rounded-xl p-2 text-[#918ba2] transition hover:bg-white hover:text-[#6d5df5]" aria-label="Notificações">
                 <Bell size={18} />
@@ -375,11 +347,7 @@ const Index = () => {
                 </section>
               )
               ) : (
-                <ModulePlaceholder
-                  title={activeModuleItem.label}
-                  description={`A interface visual de ${activeModuleItem.label} está preparada para receber os campos, relações e fluxos definidos para o URUCUM.`}
-                  icon={activeModuleItem.icon}
-                />
+                <ModulePlaceholder title={activeModuleItem.label} icon={activeModuleItem.icon} />
               )}
             </div>
           </div>
