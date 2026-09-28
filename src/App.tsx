@@ -4,6 +4,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { AuthProvider, useAuth } from "./components/AuthProvider";
+import Home from "./pages/Home";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
@@ -24,7 +25,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/auth/*" element={session ? <Navigate to="/" replace /> : <Login />} />
-      <Route path="/" element={session ? <Index /> : <Navigate to="/auth" replace />} />
+      <Route path="/" element={session ? <Index /> : <Home />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
