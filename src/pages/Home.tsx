@@ -7,7 +7,10 @@ const values = [
   "Uma visão comum da operação",
 ];
 
-export default function Home() {
+export default function Home({ authenticated = false }: { authenticated?: boolean }) {
+  const accessPath = authenticated ? "/app" : "/auth";
+  const accessLabel = authenticated ? "Acessar sistema" : "Entrar no sistema";
+
   return (
     <main className="min-h-screen overflow-hidden bg-[#fbfaf8] text-[#342d57]">
       <header className="relative z-10 mx-auto flex w-full max-w-[1240px] items-center justify-between px-5 py-5 sm:px-8 lg:px-12">
@@ -18,8 +21,8 @@ export default function Home() {
             <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.15em] text-[#a09aaa]">Base comum para decidir</p>
           </div>
         </div>
-        <Link to="/auth" className="inline-flex items-center gap-2 rounded-full border border-[#ded9ef] bg-white px-4 py-2.5 text-[12px] font-bold text-[#6258cf] shadow-[0_5px_15px_rgba(77,64,120,0.04)] transition hover:-translate-y-0.5 hover:border-[#bdb5f7] hover:text-[#4f42c5]">
-          Entrar no sistema <ArrowRight size={14} />
+        <Link to={accessPath} className="inline-flex items-center gap-2 rounded-full border border-[#ded9ef] bg-white px-4 py-2.5 text-[12px] font-bold text-[#6258cf] shadow-[0_5px_15px_rgba(77,64,120,0.04)] transition hover:-translate-y-0.5 hover:border-[#bdb5f7] hover:text-[#4f42c5]">
+          {accessLabel} <ArrowRight size={14} />
         </Link>
       </header>
 
@@ -35,8 +38,8 @@ export default function Home() {
             O URUCUM aproxima a experiência do Chef Alisson Brilhante de uma base comum para organizar necessidades, compras, recebimentos e decisões do dia a dia.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-            <Link to="/auth" className="inline-flex h-12 items-center justify-center gap-2 rounded-[14px] bg-[#6d5df5] px-5 text-[13px] font-bold text-white shadow-[0_10px_22px_rgba(109,93,245,0.22)] transition hover:-translate-y-0.5 hover:bg-[#5b4ada]">
-              Conhecer o sistema <ArrowRight size={16} />
+            <Link to={accessPath} className="inline-flex h-12 items-center justify-center gap-2 rounded-[14px] bg-[#6d5df5] px-5 text-[13px] font-bold text-white shadow-[0_10px_22px_rgba(109,93,245,0.22)] transition hover:-translate-y-0.5 hover:bg-[#5b4ada]">
+              {authenticated ? "Acessar sistema" : "Conhecer o sistema"} <ArrowRight size={16} />
             </Link>
             <a href="#chef" className="inline-flex h-12 items-center justify-center rounded-[14px] border border-[#e2deeb] bg-white px-5 text-[13px] font-bold text-[#625b77] transition hover:border-[#c9c2e8] hover:text-[#6d5df5]">
               Sobre o Chef

@@ -24,8 +24,9 @@ function AppRoutes() {
 
   return (
     <Routes>
-      <Route path="/auth/*" element={session ? <Navigate to="/" replace /> : <Login />} />
-      <Route path="/" element={session ? <Index /> : <Home />} />
+      <Route path="/auth/*" element={session ? <Navigate to="/app" replace /> : <Login />} />
+      <Route path="/" element={<Home authenticated={Boolean(session)} />} />
+      <Route path="/app" element={session ? <Index /> : <Navigate to="/auth" replace />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
