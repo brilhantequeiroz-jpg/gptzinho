@@ -1,21 +1,30 @@
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
+import { ModulePlaceholder } from "@/components/urucum/ModulePlaceholder";
 import {
   ArrowUp,
+  BarChart3,
   Bell,
   ChevronDown,
+  ClipboardList,
+  ClipboardPenLine,
   Clock3,
   FileText,
+  LayoutDashboard,
   Lightbulb,
   Menu,
   MessageCircle,
   MoreHorizontal,
+  PackageSearch,
   Paperclip,
   Plus,
   Search,
   Settings2,
+  ShoppingCart,
   Sparkles,
   Star,
+  Utensils,
+  WalletCards,
   X,
   Zap,
 } from "lucide-react";
@@ -51,10 +60,40 @@ const starterPrompts = [
 ];
 
 const recentChats = [
-  { title: "Planejamento de viagem", time: "Hoje", active: true },
-  { title: "Ideias para newsletter", time: "Ontem" },
-  { title: "Receita de pão caseiro", time: "12 jun" },
-  { title: "Organização da rotina", time: "10 jun" },
+  { title: "Conversa de demonstração", time: "Hoje" },
+  { title: "Análise para revisão", time: "Ontem" },
+  { title: "Nota de trabalho", time: "12 jun" },
+  { title: "Nova conversa", time: "10 jun" },
+];
+
+type ModuleKey =
+  | "dashboard"
+  | "pedidos"
+  | "cardapio"
+  | "estoque"
+  | "compras"
+  | "fichas"
+  | "financeiro"
+  | "relatorios"
+  | "gptzinho";
+
+type ModuleItem = {
+  key: ModuleKey;
+  label: string;
+  description: string;
+  icon: typeof LayoutDashboard;
+};
+
+const modules: ModuleItem[] = [
+  { key: "dashboard", label: "Dashboard", description: "Visão geral", icon: LayoutDashboard },
+  { key: "pedidos", label: "Pedidos", description: "Interface preparada", icon: ClipboardList },
+  { key: "cardapio", label: "Cardápio", description: "Interface preparada", icon: Utensils },
+  { key: "estoque", label: "Estoque", description: "Interface preparada", icon: PackageSearch },
+  { key: "compras", label: "Compras", description: "Interface preparada", icon: ShoppingCart },
+  { key: "fichas", label: "Fichas Técnicas", description: "Interface preparada", icon: ClipboardPenLine },
+  { key: "financeiro", label: "Financeiro", description: "Interface preparada", icon: WalletCards },
+  { key: "relatorios", label: "Relatórios", description: "Interface preparada", icon: BarChart3 },
+  { key: "gptzinho", label: "GPTzinho", description: "Assistente integrado", icon: Sparkles },
 ];
 
 function RobotMark({ small = false }: { small?: boolean }) {
@@ -83,14 +122,17 @@ const Index = () => {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeChat, setActiveChat] = useState("Planejamento de viagem");
+  const [activeModule, setActiveModule] = useState<ModuleKey>("gptzinho");
+  const [activeChat, setActiveChat] = useState("Conversa de demonstração");
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const activeModuleItem = modules.find((module) => module.key === activeModule) ?? modules[0];
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
   const startNewChat = () => {
+    setActiveModule("gptzinho");
     setMessages([]);
     setInput("");
     setActiveChat("Nova conversa");
@@ -147,9 +189,10 @@ const Index = () => {
                 <MessageCircle size={18} strokeWidth={2.5} />
                 <Sparkles className="-ml-1 -mt-4" size={10} strokeWidth={3} />
               </div>
-              <span className="font-display text-[21px] font-bold tracking-[-0.04em] text-[#302a54]">
-                gptzinho<span className="text-[#f08c6c]">.</span>
-              </span>
+              <div>
+                <p className="font-display text-[18px] font-bold leading-none tracking-[-0.04em] text-[#302a54]">URUCUM<span className="text-[#f08c6c]">.</span></p>
+                <p className="mt-1 text-[9px] font-semibold uppercase tracking-[0.14em] text-[#9d97b0]">Chef Alisson Brilhante</p>
+              </div>
             </div>
             <button
               className="rounded-lg p-1.5 text-[#a29cb7] transition hover:bg-white hover:text-[#6d5df5] md:hidden"
@@ -162,11 +205,31 @@ const Index = () => {
 
           <Button
             onClick={startNewChat}
-            className="mb-7 h-11 w-full justify-center gap-2 rounded-[14px] bg-[#6d5df5] font-semibold text-white shadow-[0_8px_16px_rgba(109,93,245,0.2)] transition hover:-translate-y-0.5 hover:bg-[#5e4ee1]"
+            className="mb-6 h-11 w-full justify-center gap-2 rounded-[14px] bg-[#6d5df5] font-semibold text-white shadow-[0_8px_16px_rgba(109,93,245,0.2)] transition hover:-translate-y-0.5 hover:bg-[#5e4ee1]"
           >
             <Plus size={17} strokeWidth={2.5} />
             Nova conversa
           </Button>
+
+          <div className="mb-3 px-2">
+            <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#aaa5bd]">Estrutura do URUCUM</p>
+          </div>
+          <nav className="mb-6 space-y-1" aria-label="Módulos do URUCUM">
+            {modules.map(({ key, label, icon: Icon }) => (
+              <button
+                key={key}
+                onClick={() => {
+                  setActiveModule(key);
+                  setIsSidebarOpen(false);
+                }}
+                className={`group flex w-full items-center gap-3 rounded-[13px] px-3 py-2.5 text-left transition ${activeModule === key ? "bg-white text-[#423b65] shadow-[0_4px_14px_rgba(80,67,128,0.07)]" : "text-[#77718d] hover:bg-white/70"}`}
+              >
+                <Icon size={16} className={activeModule === key ? "text-[#6d5df5]" : "text-[#aaa5bd]"} />
+                <span className={`min-w-0 flex-1 truncate text-[12px] ${activeModule === key ? "font-bold" : "font-medium"}`}>{label}</span>
+                {key === "gptzinho" && <span className="h-1.5 w-1.5 rounded-full bg-[#42bc8c]" />}
+              </button>
+            ))}
+          </nav>
 
           <div className="mb-3 flex items-center justify-between px-2">
             <p className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#aaa5bd]">Suas conversas</p>
@@ -180,14 +243,15 @@ const Index = () => {
               <button
                 key={chat.title}
                 onClick={() => {
+                  setActiveModule("gptzinho");
                   setActiveChat(chat.title);
                   setMessages([]);
                   setIsSidebarOpen(false);
                 }}
-                className={`group flex w-full items-center gap-3 rounded-[13px] px-3 py-3 text-left transition ${activeChat === chat.title ? "bg-white shadow-[0_4px_14px_rgba(80,67,128,0.07)]" : "hover:bg-white/70"}`}
+                className={`group flex w-full items-center gap-3 rounded-[13px] px-3 py-3 text-left transition ${activeChat === chat.title && activeModule === "gptzinho" ? "bg-white shadow-[0_4px_14px_rgba(80,67,128,0.07)]" : "hover:bg-white/70"}`}
               >
-                <MessageCircle size={16} className={activeChat === chat.title ? "text-[#6d5df5]" : "text-[#aaa5bd]"} />
-                <span className={`min-w-0 flex-1 truncate text-[13px] ${activeChat === chat.title ? "font-semibold text-[#423b65]" : "text-[#77718d]"}`}>
+                <MessageCircle size={16} className={activeChat === chat.title && activeModule === "gptzinho" ? "text-[#6d5df5]" : "text-[#aaa5bd]"} />
+                <span className={`min-w-0 flex-1 truncate text-[13px] ${activeChat === chat.title && activeModule === "gptzinho" ? "font-semibold text-[#423b65]" : "text-[#77718d]"}`}>
                   {chat.title}
                 </span>
                 <span className="text-[10px] text-[#b1adbd]">{chat.time}</span>
@@ -203,10 +267,10 @@ const Index = () => {
               <Settings2 size={16} /> Configurações
             </button>
             <div className="mt-4 flex items-center gap-3 rounded-[14px] bg-white/70 px-3 py-3">
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f5b19d] text-[11px] font-bold text-white">LM</div>
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#f5b19d] text-[11px] font-bold text-white">?</div>
               <div className="min-w-0 flex-1">
-                <p className="truncate text-[12px] font-semibold text-[#423b65]">Lia Martins</p>
-                <p className="text-[10px] text-[#aaa5bd]">Plano gratuito</p>
+                <p className="truncate text-[12px] font-semibold text-[#423b65]">Usuário atual</p>
+                <p className="text-[10px] text-[#aaa5bd]">Identidade a definir</p>
               </div>
               <ChevronDown size={14} className="text-[#aaa5bd]" />
             </div>
@@ -224,10 +288,12 @@ const Index = () => {
                 <Menu size={21} />
               </button>
               <div className="hidden items-center gap-2 text-[12px] text-[#aba6b7] sm:flex">
-                <span>Workspace</span>
+                <span>URUCUM</span>
                 <span className="text-[#d3cfda]">/</span>
               </div>
-              <span className="max-w-[170px] truncate text-[13px] font-semibold text-[#4b4564] sm:max-w-none">{activeChat}</span>
+              <span className="max-w-[190px] truncate text-[13px] font-semibold text-[#4b4564] sm:max-w-none">
+                {activeModuleItem.label}
+              </span>
             </div>
             <div className="flex items-center gap-2 sm:gap-4">
               <div className="hidden items-center gap-2 rounded-full bg-[#eaf8f1] px-3 py-1.5 text-[11px] font-semibold text-[#279b70] sm:flex">
@@ -246,7 +312,8 @@ const Index = () => {
 
           <div className="chat-pattern flex flex-1 flex-col overflow-y-auto px-5 pb-5 sm:px-8 lg:px-12">
             <div className={`mx-auto flex w-full max-w-[900px] flex-1 flex-col ${messages.length ? "pt-8" : "justify-center pb-6 pt-10"}`}>
-              {messages.length === 0 ? (
+              {activeModule === "gptzinho" ? (
+                messages.length === 0 ? (
                 <>
                   <section className="animate-fade-up mb-9 text-center">
                     <div className="relative mx-auto mb-7 w-fit">
@@ -306,12 +373,20 @@ const Index = () => {
                     </div>
                   )}
                 </section>
+              )
+              ) : (
+                <ModulePlaceholder
+                  title={activeModuleItem.label}
+                  description={`A interface visual de ${activeModuleItem.label} está preparada para receber os campos, relações e fluxos definidos para o URUCUM.`}
+                  icon={activeModuleItem.icon}
+                />
               )}
             </div>
           </div>
 
-          <div className="bg-[#fbfaf8] px-5 pb-5 pt-3 sm:px-8 lg:px-12">
-            <div className="mx-auto w-full max-w-[900px]">
+          {activeModule === "gptzinho" && (
+            <div className="bg-[#fbfaf8] px-5 pb-5 pt-3 sm:px-8 lg:px-12">
+              <div className="mx-auto w-full max-w-[900px]">
               <form onSubmit={handleSubmit} className="group relative rounded-[20px] border border-[#e5e1ee] bg-white p-2 shadow-[0_10px_30px_rgba(70,58,112,0.08)] transition focus-within:border-[#bdb5f7] focus-within:shadow-[0_12px_32px_rgba(109,93,245,0.13)]">
                 <textarea
                   ref={inputRef}
@@ -336,9 +411,10 @@ const Index = () => {
                   <ArrowUp size={17} strokeWidth={2.5} />
                 </button>
               </form>
-              <p className="mt-3 text-center text-[10px] text-[#b3aebc]">O Gptzinho pode cometer erros. Confirme informações importantes.</p>
+                <p className="mt-3 text-center text-[10px] text-[#b3aebc]">O Gptzinho pode cometer erros. Confirme informações importantes.</p>
+              </div>
             </div>
-          </div>
+          )}
         </main>
       </div>
     </div>
