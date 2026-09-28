@@ -23,10 +23,10 @@ export default function Home({ authenticated = false }: { authenticated?: boolea
       <section className="mx-auto flex w-full max-w-[900px] items-center px-5 pb-14 pt-10 sm:px-8 lg:px-12 lg:pb-24 lg:pt-16">
         <div className="max-w-[620px]">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-[#eeeaff] px-3.5 py-2 text-[10px] font-bold uppercase tracking-[0.17em] text-[#7165d7]">
-            <Sparkles size={13} /> Uma nova forma de organizar a cozinha
+            <Sparkles size={13} /> Uma nova forma de organizar sua cozinha profissional.
           </div>
           <h1 className="font-display text-[42px] font-bold leading-[1.03] tracking-[-0.065em] text-[#342d57] sm:text-[60px] lg:text-[72px]">
-            O sabor começa com uma <span className="text-[#6d5df5]">decisão bem cuidada.</span>
+            Controle e Gestão acompanhadas de sabor.
           </h1>
           <p className="mt-6 max-w-[540px] text-[16px] leading-7 text-[#837c96] sm:text-[18px]">
             O URUCUM aproxima a experiência do Chef Alisson Brilhante de uma base comum para organizar necessidades, compras, recebimentos e decisões do dia a dia.
