@@ -1,6 +1,5 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
-import { MessageCircle, Sparkles } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export default function Login() {
@@ -9,10 +8,7 @@ export default function Login() {
       <div className="mx-auto flex min-h-[calc(100vh-5rem)] w-full max-w-[1040px] items-center justify-center gap-16 lg:justify-between">
         <section className="hidden max-w-[430px] lg:block">
           <div className="mb-7 flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-[15px] bg-[#6d5df5] text-white shadow-[0_9px_20px_rgba(109,93,245,0.22)]">
-              <MessageCircle size={20} strokeWidth={2.5} />
-              <Sparkles className="-ml-1 -mt-5" size={11} strokeWidth={3} />
-            </div>
+            <img src="/avatar_alisson_brilhante.png" alt="Alisson Brilhante" className="h-11 w-11 rounded-[15px] object-cover shadow-[0_9px_20px_rgba(109,93,245,0.22)]" />
             <div>
               <p className="font-display text-[22px] font-bold tracking-[-0.05em] text-[#302a54]">URUCUM<span className="text-[#f08c6c]">.</span></p>
               <p className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#9d97b0]">Chef Alisson Brilhante</p>
