@@ -12,7 +12,7 @@ export function MenuCardapio() {
         <div>
           <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#8a9270]">Coletânea Pessoal</p>
           <h1 id="menu-cardapio-title" className="font-display text-[28px] font-bold leading-tight tracking-[-0.05em] text-[#3d4e45] sm:text-[36px]">
-            Cardápio
+            Cardápios
           </h1>
           <p className="mt-2 max-w-[540px] text-[13px] leading-6 text-[#7f857a]">
             Explore o menu completo Alisson Brilhante. Deslize para os lados para visualizar todos os grupos e preparos.

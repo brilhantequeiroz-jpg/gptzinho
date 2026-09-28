@@ -83,7 +83,7 @@ type ModuleItem = {
 const modules: ModuleItem[] = [
   { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
   { key: "pedidos", label: "Pedidos", icon: ClipboardList },
-  { key: "cardapio", label: "Cardápio", icon: Utensils },
+  { key: "cardapio", label: "Cardápios", icon: Utensils },
   { key: "estoque", label: "Estoque", icon: PackageSearch },
   { key: "compras", label: "Compras", icon: ShoppingCart },
   { key: "fichas", label: "Fichas Técnicas", icon: ClipboardPenLine },
