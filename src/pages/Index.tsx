@@ -16,7 +16,6 @@ import {
   LayoutDashboard,
   Lightbulb,
   Menu,
-  MessageCircle,
   MoreHorizontal,
   PackageSearch,
   Paperclip,
@@ -93,15 +92,8 @@ const modules: ModuleItem[] = [
 
 function RobotMark({ small = false }: { small?: boolean }) {
   return (
-    <div className={`robot-mark ${small ? "robot-mark-small" : ""}`} aria-hidden="true">
-      <div className="robot-antenna" />
-      <div className="robot-face">
-        <span className="robot-eye" />
-        <span className="robot-eye" />
-        <span className="robot-smile" />
-      </div>
-      <span className="robot-spark robot-spark-one">✦</span>
-      <span className="robot-spark robot-spark-two">✦</span>
+    <div className={`robot-mark overflow-hidden ${small ? "robot-mark-small" : ""}`} aria-hidden="true">
+      <img src="/avatar-alisson-brilhante.png" alt="" className="h-full w-full object-cover object-center" />
     </div>
   );
 }
@@ -180,9 +172,8 @@ const Index = () => {
         >
           <div className="mb-8 flex items-center justify-between px-2">
             <div className="flex items-center gap-2.5">
-              <div className="flex h-9 w-9 items-center justify-center rounded-[13px] bg-[#6d5df5] text-white shadow-[0_7px_16px_rgba(109,93,245,0.22)]">
-                <MessageCircle size={18} strokeWidth={2.5} />
-                <Sparkles className="-ml-1 -mt-4" size={10} strokeWidth={3} />
+              <div className="h-9 w-9 overflow-hidden rounded-[13px] bg-[#dfe8ea] shadow-[0_7px_16px_rgba(77,99,103,0.2)]">
+                <img src="/avatar-alisson-brilhante.png" alt="Alisson Brilhante" className="h-full w-full object-cover object-center" />
               </div>
               <div>
                 <p className="font-display text-[18px] font-bold leading-none tracking-[-0.04em] text-[#302a54]">URUCUM<span className="text-[#f08c6c]">.</span></p>
