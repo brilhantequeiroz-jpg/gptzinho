@@ -12,7 +12,7 @@ export default function Home({ authenticated = false }: { authenticated?: boolea
           <img src="/avatar_alisson_brilhante.png" alt="Alisson Brilhante" className="h-10 w-10 rounded-[14px] object-cover shadow-[0_8px_18px_rgba(109,93,245,0.18)]" />
           <div>
             <p className="font-display text-[19px] font-bold leading-none tracking-[-0.05em] text-[#302a54]">URUCUM<span className="text-[#f08c6c]">.</span></p>
-            <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.15em] text-[#a09aaa]">Base comum para decidir</p>
+            <p className="mt-1 text-[9px] font-bold uppercase tracking-[0.15em] text-[#a09aaa]">Sistema de Gestão Para Restaurantes</p>
           </div>
         </div>
         <Link to={accessPath} className="inline-flex items-center gap-2 rounded-full border border-[#ded9ef] bg-white px-4 py-2.5 text-[12px] font-bold text-[#6258cf] shadow-[0_5px_15px_rgba(77,64,120,0.04)] transition hover:-translate-y-0.5 hover:border-[#bdb5f7] hover:text-[#4f42c5]">
@@ -29,7 +29,7 @@ export default function Home({ authenticated = false }: { authenticated?: boolea
             Controle e Gestão acompanhadas de sabor.
           </h1>
           <p className="mt-6 max-w-[540px] text-[16px] leading-7 text-[#837c96] sm:text-[18px]">
-            O URUCUM aproxima a experiência do Chef Alisson Brilhante de uma base comum para organizar necessidades, compras, recebimentos e decisões do dia a dia.
+            O Urucum nasce da necessidade de transformar o sistema de Gestão através do olhar da cozinha. Adequado a rotina e a realidade dos processos, garantindo rastreabilidade da operação ponta-a-ponta, garante o controle e análise das informações em tempo real.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Link to={accessPath} className="inline-flex h-12 items-center justify-center gap-2 rounded-[14px] bg-[#6d5df5] px-5 text-[13px] font-bold text-white shadow-[0_10px_22px_rgba(109,93,245,0.22)] transition hover:-translate-y-0.5 hover:bg-[#5b4ada]">
