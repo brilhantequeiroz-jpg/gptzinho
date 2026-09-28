@@ -299,10 +299,10 @@ export function Cycle01Panel({ focus }: { focus: CycleFocus }) {
             <div className="space-y-5">
               <div className="grid gap-4 sm:grid-cols-3">
                 <CycleMetric label="Pedidos" value={orders.length} />
-                <CycleMetric label="Conferências" value={checks.length} />
+                <CycleMetric label="Conferências opcionais" value={checks.length} />
                 <CycleMetric label="Notas Fiscais" value={invoices.length} />
               </div>
-              <AuthorityNotice text={hasRole("compras") || hasRole("gerencia") ? "Conferência e NF permanecem separadas da confirmação." : "Autoridades de Compras e Gerência pendentes de atribuição."} />
+              <AuthorityNotice text={hasRole("compras") || hasRole("gerencia") ? "A conferência física é opcional e não impede o lançamento da NF. A confirmação permanece exclusiva da Gerência." : "Autoridades de Compras e Gerência pendentes de atribuição."} />
               {pendingOrders.map((order) => {
                 const orderHasCheck = checks.some((check) => check.purchase_order_id === order.id);
                 return (
@@ -314,9 +314,9 @@ export function Cycle01Panel({ focus }: { focus: CycleFocus }) {
                       </div>
                       <div className="flex gap-2">
                         {hasRole("compras") && !orderHasCheck && (
-                          <button onClick={() => { setCheckOrder(order.id); setCheckQuantities(Object.fromEntries(orderItemsFor(order.id).map((item) => [item.id, ""]))); }} className="rounded-lg bg-[#f0edff] px-3 py-2 text-[11px] font-semibold text-[#6d5df5]">Conferir item + quantidade</button>
+                          <button onClick={() => { setCheckOrder(order.id); setCheckQuantities(Object.fromEntries(orderItemsFor(order.id).map((item) => [item.id, ""]))); }} className="rounded-lg bg-[#f0edff] px-3 py-2 text-[11px] font-semibold text-[#6d5df5]">Conferir item + quantidade (opcional)</button>
                         )}
-                        {hasRole("compras") && orderHasCheck && (
+                        {hasRole("compras") && (
                           <button onClick={() => { const supplier = suppliers.find((item) => item.id === order.supplier_id); setInvoiceOrder(order.id); setInvoiceForm({ supplierId: order.supplier_id ?? "", supplierName: supplier?.name ?? order.supplier_name, reference: "" }); setInvoiceQuantities(Object.fromEntries(orderItemsFor(order.id).map((item) => [item.item_id, ""]))); }} className="rounded-lg bg-[#f0edff] px-3 py-2 text-[11px] font-semibold text-[#6d5df5]">Lançar NF</button>
                         )}
                       </div>
@@ -360,7 +360,7 @@ function DecisionForm({ requestId, items, itemName, suppliers, supplier, setSupp
 }
 
 function CheckForm({ items, itemName, quantities, setQuantities, onCancel, onSubmit, busy }: { items: OrderItem[]; itemName: (id: string) => string; quantities: Record<string, string>; setQuantities: (value: Record<string, string>) => void; onCancel: () => void; onSubmit: () => void; busy: boolean }) {
-  return <div className="mt-4 rounded-[15px] border border-[#e9e5f0] bg-[#fbfafc] p-4"><p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#8b82cf]">Conferência restrita a item + quantidade</p><div className="mt-3 space-y-2">{items.map((item) => <label key={item.id} className="flex items-center justify-between gap-4 text-[12px] text-[#625b77]"><span>{itemName(item.item_id)} · comprado {item.decided_quantity}</span><input type="number" step="any" value={quantities[item.id] ?? ""} onChange={(event) => setQuantities({ ...quantities, [item.id]: event.target.value })} placeholder="Recebido" className="h-9 w-32 rounded-[9px] border border-[#e5e1ee] bg-white px-2 text-right" /></label>)}</div><div className="mt-3 flex gap-2"><button onClick={onSubmit} disabled={busy} className="h-9 rounded-[9px] bg-[#6d5df5] px-3 text-[11px] font-semibold text-white">Registrar conferência</button><button onClick={onCancel} className="h-9 rounded-[9px] px-3 text-[11px] text-[#918ba2]">Cancelar</button></div></div>;
+  return <div className="mt-4 rounded-[15px] border border-[#e9e5f0] bg-[#fbfafc] p-4"><p className="text-[11px] font-bold uppercase tracking-[0.14em] text-[#8b82cf]">Conferência física opcional · item + quantidade</p><div className="mt-3 space-y-2">{items.map((item) => <label key={item.id} className="flex items-center justify-between gap-4 text-[12px] text-[#625b77]"><span>{itemName(item.item_id)} · comprado {item.decided_quantity}</span><input type="number" step="any" value={quantities[item.id] ?? ""} onChange={(event) => setQuantities({ ...quantities, [item.id]: event.target.value })} placeholder="Recebido" className="h-9 w-32 rounded-[9px] border border-[#e5e1ee] bg-white px-2 text-right" /></label>)}</div><div className="mt-3 flex gap-2"><button onClick={onSubmit} disabled={busy} className="h-9 rounded-[9px] bg-[#6d5df5] px-3 text-[11px] font-semibold text-white">Registrar conferência</button><button onClick={onCancel} className="h-9 rounded-[9px] px-3 text-[11px] text-[#918ba2]">Cancelar</button></div></div>;
 }
 
 function InvoiceForm({ items, itemName, suppliers, form, setForm, quantities, setQuantities, onCancel, onSubmit, busy }: { items: OrderItem[]; itemName: (id: string) => string; suppliers: Supplier[]; form: { supplierId: string; supplierName: string; reference: string }; setForm: (value: { supplierId: string; supplierName: string; reference: string }) => void; quantities: Record<string, string>; setQuantities: (value: Record<string, string>) => void; onCancel: () => void; onSubmit: () => void; busy: boolean }) {
