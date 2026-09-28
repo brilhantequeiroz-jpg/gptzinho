@@ -1,12 +1,14 @@
 import type { LucideIcon } from "lucide-react";
-import { Clock3 } from "lucide-react";
+import { ArrowRight, Clock3 } from "lucide-react";
 
 type ModulePlaceholderProps = {
   title: string;
   icon: LucideIcon;
+  actionLabel?: string;
+  onAction?: () => void;
 };
 
-export function ModulePlaceholder({ title, icon: Icon }: ModulePlaceholderProps) {
+export function ModulePlaceholder({ title, icon: Icon, actionLabel, onAction }: ModulePlaceholderProps) {
   return (
     <section className="flex flex-1 flex-col items-center justify-center py-16 text-center">
       <div className="mb-6 flex h-16 w-16 items-center justify-center rounded-[22px] bg-[#e8e4ff] text-[#6d5df5] shadow-[0_10px_22px_rgba(109,93,245,0.1)]">
@@ -21,6 +23,11 @@ export function ModulePlaceholder({ title, icon: Icon }: ModulePlaceholderProps)
         <Clock3 size={14} />
         Sem operação definida
       </div>
+      {actionLabel && onAction && (
+        <button onClick={onAction} className="mt-4 inline-flex items-center gap-2 rounded-[12px] bg-[#6d5df5] px-4 py-2.5 text-[12px] font-bold text-white shadow-[0_8px_16px_rgba(109,93,245,0.18)] transition hover:-translate-y-0.5 hover:bg-[#5b4ada]">
+          {actionLabel} <ArrowRight size={14} />
+        </button>
+      )}
     </section>
   );
 }

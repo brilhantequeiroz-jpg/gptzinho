@@ -108,7 +108,7 @@ const Index = () => {
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [activeModule, setActiveModule] = useState<ModuleKey>("gptzinho");
+  const [activeModule, setActiveModule] = useState<ModuleKey>("dashboard");
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const activeModuleItem = modules.find((module) => module.key === activeModule) ?? modules[0];
 
@@ -340,7 +340,12 @@ const Index = () => {
               ) : activeModule === "pedidos" || activeModule === "compras" || activeModule === "estoque" ? (
                 <Cycle01Panel focus={activeModule} />
               ) : (
-                <ModulePlaceholder title={activeModuleItem.label} icon={activeModuleItem.icon} />
+                <ModulePlaceholder
+                  title={activeModuleItem.label}
+                  icon={activeModuleItem.icon}
+                  actionLabel={activeModule === "dashboard" ? "Abrir GPTzinho" : undefined}
+                  onAction={activeModule === "dashboard" ? () => setActiveModule("gptzinho") : undefined}
+                />
               )}
             </div>
           </div>
