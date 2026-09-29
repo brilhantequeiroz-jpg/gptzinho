@@ -7,6 +7,7 @@ import { useUrucumRoles } from "@/hooks/useUrucumRoles";
 import { ModulePlaceholder } from "@/components/urucum/ModulePlaceholder";
 import { MenuCardapio } from "@/components/urucum/MenuCardapio";
 import { CadastroPanel } from "@/components/urucum/CadastroPanel";
+import { RecebimentoPanel } from "@/components/urucum/RecebimentoPanel";
 import {
   ArrowUp,
   BarChart3,
@@ -73,6 +74,7 @@ type ModuleKey =
   | "cardapio"
   | "estoque"
   | "compras"
+  | "recebimento"
   | "fichas"
   | "financeiro"
   | "relatorios"
@@ -90,8 +92,9 @@ const modules: ModuleItem[] = [
   { key: "pedidos", label: "Pedidos", icon: ClipboardList },
   { key: "cardapio", label: "Cardápios", icon: Utensils },
   { key: "estoque", label: "Estoque", icon: PackageSearch },
-  { key: "compras", label: "Compras", icon: ShoppingCart },
-  { key: "fichas", label: "Fichas Técnicas", icon: ClipboardPenLine },
+    { key: "compras", label: "Compras", icon: ShoppingCart },
+    { key: "recebimento", label: "Recebimento / NF", icon: FileCheck2 },
+    { key: "fichas", label: "Fichas Técnicas", icon: ClipboardPenLine },
   { key: "financeiro", label: "Financeiro", icon: WalletCards },
   { key: "relatorios", label: "Relatórios", icon: BarChart3 },
   { key: "gptzinho", label: "GPTzinho", icon: Sparkles },
