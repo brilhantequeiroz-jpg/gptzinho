@@ -171,7 +171,7 @@ const Index = () => {
         )}
 
         <aside
-          className={`fixed inset-y-0 left-0 z-40 flex w-[282px] -translate-x-full flex-col border-r border-[#ece9f1] bg-[#f7f5ff] px-4 py-5 transition-transform duration-300 md:relative md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : ""}`}
+          className={`fixed inset-y-0 left-0 z-40 flex w-[282px] -translate-x-full flex-col overflow-y-auto border-r border-[#ece9f1] bg-[#f7f5ff] px-4 py-5 transition-transform duration-300 md:relative md:translate-x-0 ${isSidebarOpen ? "translate-x-0" : ""}`}
         >
           <div className="mb-8 flex items-center justify-between px-2">
             <Link to="/" className="flex items-center gap-2.5 rounded-[14px] outline-none transition hover:opacity-80 focus-visible:ring-2 focus-visible:ring-[#bdb5f7]">
@@ -285,6 +285,14 @@ const Index = () => {
               </button>
               <button className="rounded-xl p-2 text-[#918ba2] transition hover:bg-white hover:text-[#6d5df5]" aria-label="Mais opções">
                 <MoreHorizontal size={19} />
+              </button>
+              <button
+                onClick={signOut}
+                className="flex items-center gap-1.5 rounded-xl border border-[#f0dce0] bg-[#fff8f8] px-2.5 py-2 text-[11px] font-semibold text-[#a06f78] transition hover:border-[#e9bfc7] hover:bg-[#fff1f1] hover:text-[#b34f60] sm:px-3"
+                aria-label="Sair do sistema"
+              >
+                <LogOut size={15} />
+                <span className="hidden sm:inline">Sair</span>
               </button>
             </div>
           </header>
