@@ -1,5 +1,6 @@
 import { Auth } from "@supabase/auth-ui-react";
 import { ThemeSupa } from "@supabase/auth-ui-shared";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 
 export default function Login() {
@@ -27,6 +28,7 @@ export default function Login() {
           <Auth
             supabaseClient={supabase}
             providers={[]}
+            redirectTo={`${window.location.origin}/auth/reset-password`}
             appearance={{
               theme: ThemeSupa,
               variables: {
@@ -47,6 +49,9 @@ export default function Login() {
             }}
             theme="light"
           />
+          <Link to="/auth/forgot-password" className="mt-4 block text-center text-[12px] font-semibold text-[#6d5df5] hover:text-[#5143ce]">
+            Esqueci minha senha
+          </Link>
         </section>
       </div>
     </main>

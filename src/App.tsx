@@ -7,6 +7,7 @@ import { AuthProvider, useAuth } from "./components/AuthProvider";
 import Home from "./pages/Home";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
+import { ForgotPassword, ResetPassword } from "./pages/PasswordRecovery";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -24,6 +25,8 @@ function AppRoutes() {
 
   return (
     <Routes>
+      <Route path="/auth/forgot-password" element={<ForgotPassword />} />
+      <Route path="/auth/reset-password" element={<ResetPassword />} />
       <Route path="/auth/*" element={session ? <Navigate to="/app" replace /> : <Login />} />
       <Route path="/" element={<Home authenticated={Boolean(session)} />} />
       <Route path="/app" element={session ? <Index /> : <Navigate to="/auth" replace />} />
