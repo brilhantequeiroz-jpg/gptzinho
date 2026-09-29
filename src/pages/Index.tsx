@@ -6,6 +6,7 @@ import { Cycle01Panel } from "@/components/urucum/Cycle01Panel";
 import { useUrucumRoles } from "@/hooks/useUrucumRoles";
 import { ModulePlaceholder } from "@/components/urucum/ModulePlaceholder";
 import { MenuCardapio } from "@/components/urucum/MenuCardapio";
+import { CadastroPanel } from "@/components/urucum/CadastroPanel";
 import {
   ArrowUp,
   BarChart3,
@@ -28,6 +29,7 @@ import {
   Sparkles,
   Star,
   Utensils,
+  UsersRound,
   WalletCards,
   X,
   Zap,
@@ -65,6 +67,7 @@ const starterPrompts = [
 
 type ModuleKey =
   | "dashboard"
+  | "cadastros"
   | "pedidos"
   | "cardapio"
   | "estoque"
@@ -82,6 +85,7 @@ type ModuleItem = {
 
 const modules: ModuleItem[] = [
   { key: "dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { key: "cadastros", label: "Cadastros", icon: UsersRound },
   { key: "pedidos", label: "Pedidos", icon: ClipboardList },
   { key: "cardapio", label: "Cardápios", icon: Utensils },
   { key: "estoque", label: "Estoque", icon: PackageSearch },
@@ -340,6 +344,8 @@ const Index = () => {
               )
               ) : activeModule === "cardapio" ? (
                 <MenuCardapio />
+              ) : activeModule === "cadastros" ? (
+                <CadastroPanel />
               ) : activeModule === "pedidos" || activeModule === "compras" || activeModule === "estoque" ? (
                 <Cycle01Panel focus={activeModule} />
               ) : (
