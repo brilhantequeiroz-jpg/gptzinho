@@ -3,6 +3,7 @@ import { Pencil, Plus, Save, Search, ShieldCheck, Trash2, Truck, UsersRound, X, 
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/components/AuthProvider";
 import { useUrucumRoles } from "@/hooks/useUrucumRoles";
+import { EmployeeWorkspaceFull } from "@/components/urucum/EmployeeWorkspaceFull";
 
 type CadastroTab = "items" | "suppliers" | "employees";
 type Item = { id: string; name: string; created_at: string };
@@ -276,6 +277,8 @@ export function CadastroPanel() {
 
       {activeTab === "suppliers" ? (
         <SupplierWorkspace suppliers={filteredRecords as Supplier[]} allCount={suppliers.length} items={items} form={supplierForm} setForm={setSupplierForm} contacts={supplierContacts} setContacts={setSupplierContacts} itemIds={supplierItemIds} setItemIds={setSupplierItemIds} editing={Boolean(editingSupplierId)} busy={busy} canManage={canManageSuppliers} search={search} setSearch={setSearch} loading={loading} onSubmit={submitSupplier} onEdit={startSupplierEdit} onRemove={(supplier) => remove("suppliers", supplier.id, supplier.name, resetSupplier)} onCancel={resetSupplier} />
+      ) : activeTab === "employees" ? (
+        <EmployeeWorkspaceFull />
       ) : (
         <div className="grid gap-5 lg:grid-cols-[310px_1fr]">
           <div className="rounded-[20px] border border-[#ebe7f0] bg-white p-5 shadow-[0_7px_20px_rgba(77,64,120,0.04)]">
