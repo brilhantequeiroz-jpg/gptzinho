@@ -18,6 +18,7 @@ import {
   FileText,
   LayoutDashboard,
   Lightbulb,
+  LogOut,
   Menu,
   MoreHorizontal,
   PackageSearch,
@@ -107,7 +108,7 @@ const assistantReplies = [
 ];
 
 const Index = () => {
-  const { session } = useAuth();
+  const { session, signOut } = useAuth();
   const { roles } = useUrucumRoles();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -242,6 +243,16 @@ const Index = () => {
               </div>
               <ChevronDown size={14} className="text-[#aaa5bd]" />
             </div>
+            <button
+              onClick={async () => {
+                setIsSidebarOpen(false);
+                await signOut();
+              }}
+              className="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-[13px] text-[#a06f78] transition hover:bg-[#fff1f1] hover:text-[#b34f60]"
+            >
+              <LogOut size={16} />
+              Sair do sistema
+            </button>
           </div>
         </aside>
 
