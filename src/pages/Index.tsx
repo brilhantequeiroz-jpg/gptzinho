@@ -8,6 +8,7 @@ import { ModulePlaceholder } from "@/components/urucum/ModulePlaceholder";
 import { MenuCardapio } from "@/components/urucum/MenuCardapio";
 import { CadastroPanel } from "@/components/urucum/CadastroPanel";
 import { RecebimentoPanel } from "@/components/urucum/RecebimentoPanel";
+import { StockReportPanel } from "@/components/urucum/StockReportPanel";
 import {
   ArrowUp,
   BarChart3,
@@ -366,12 +367,14 @@ const Index = () => {
                 </section>
               )
               ) : activeModule === "cardapio" ? (
-                <MenuCardapio />
-              ) : activeModule === "cadastros" ? (
-                <CadastroPanel />
-              ) : activeModule === "pedidos" || activeModule === "compras" || activeModule === "estoque" ? (
-                <Cycle01Panel focus={activeModule} />
-              ) : (
+                              <MenuCardapio />
+                            ) : activeModule === "cadastros" ? (
+                              <CadastroPanel />
+                            ) : activeModule === "estoque" ? (
+                              <StockReportPanel />
+                            ) : activeModule === "pedidos" || activeModule === "compras" ? (
+                              <Cycle01Panel focus={activeModule} />
+                            ) : (
                 <ModulePlaceholder
                   title={activeModuleItem.label}
                   icon={activeModuleItem.icon}
