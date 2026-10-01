@@ -9,6 +9,7 @@ import { MenuCardapio } from "@/components/urucum/MenuCardapio";
 import { CadastroPanel } from "@/components/urucum/CadastroPanel";
 import { RecebimentoPanel } from "@/components/urucum/RecebimentoPanel";
 import { StockReportPanel } from "@/components/urucum/StockReportPanel";
+import { FichasTecnicas } from "@/components/urucum/FichasTecnicas";
 import {
   ArrowUp,
   BarChart3,
@@ -374,6 +375,8 @@ const Index = () => {
                               <StockReportPanel />
                             ) : activeModule === "recebimento" ? (
                                                           <RecebimentoPanel />
+                                                        ) : activeModule === "fichas" ? (
+                                                          <FichasTecnicas />
                                                         ) : activeModule === "pedidos" || activeModule === "compras" ? (
                                                           <Cycle01Panel focus={activeModule} />
                                                         ) : (
