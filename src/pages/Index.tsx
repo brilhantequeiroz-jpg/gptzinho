@@ -10,6 +10,7 @@ import { CadastroPanel } from "@/components/urucum/CadastroPanel";
 import { RecebimentoPanel } from "@/components/urucum/RecebimentoPanel";
 import { StockReportPanel } from "@/components/urucum/StockReportPanel";
 import { FichasTecnicas } from "@/components/urucum/FichasTecnicas";
+import { FinanceiroPanel } from "@/components/urucum/FinanceiroPanel";
 import {
   ArrowUp,
   BarChart3,
@@ -376,8 +377,10 @@ const Index = () => {
                             ) : activeModule === "recebimento" ? (
                                                           <RecebimentoPanel />
                                                         ) : activeModule === "fichas" ? (
-                                                          <FichasTecnicas />
-                                                        ) : activeModule === "pedidos" || activeModule === "compras" ? (
+                                                                                                                  <FichasTecnicas />
+                                                                                                                ) : activeModule === "financeiro" ? (
+                                                                                                                  <FinanceiroPanel />
+                                                                                                                ) : activeModule === "pedidos" || activeModule === "compras" ? (
                                                           <Cycle01Panel focus={activeModule} />
                                                         ) : (
                 <ModulePlaceholder
