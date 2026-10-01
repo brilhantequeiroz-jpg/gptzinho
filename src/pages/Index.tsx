@@ -372,9 +372,11 @@ const Index = () => {
                               <CadastroPanel />
                             ) : activeModule === "estoque" ? (
                               <StockReportPanel />
-                            ) : activeModule === "pedidos" || activeModule === "compras" ? (
-                              <Cycle01Panel focus={activeModule} />
-                            ) : (
+                            ) : activeModule === "recebimento" ? (
+                                                          <RecebimentoPanel />
+                                                        ) : activeModule === "pedidos" || activeModule === "compras" ? (
+                                                          <Cycle01Panel focus={activeModule} />
+                                                        ) : (
                 <ModulePlaceholder
                   title={activeModuleItem.label}
                   icon={activeModuleItem.icon}
